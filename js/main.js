@@ -1,65 +1,61 @@
-// 1. CRONÔMETRO
-const timerElement = document.querySelector(".top-bar-timer strong");
-let tempoRestante = 23 * 3600 + 59 * 60 + 59;
-
-function atualizarCronometro() {
-  const horas = Math.floor(tempoRestante / 3600);
-  const minutos = Math.floor((tempoRestante % 3600) / 60);
-  const segundos = tempoRestante % 60;
-
-  const h = String(horas).padStart(2, "0");
-  const m = String(minutos).padStart(2, "0");
-  const s = String(segundos).padStart(2, "0");
-
-  if (timerElement) {
-    if (tempoRestante > 0) {
-      timerElement.innerText = `${h}h : ${m}m : ${s}s`;
-      tempoRestante--;
-    } else {
-      timerElement.parentElement.innerText = "OFERTA EXPIRADA!";
-    }
-  }
-}
-
-atualizarCronometro();
-setInterval(atualizarCronometro, 1000);
-
-// 2. LÓGICA DO MODAL (POP-UP)
+// ==========================================
+// 1. LÓGICA DO MODAL (POP-UP DE CHECKOUT)
+// ==========================================
 const modalOverlay = document.getElementById("checkout-modal");
 const closeBtn = document.querySelector(".modal-close-btn");
 const iframeCheckout = document.getElementById("kiwify-iframe");
-// Seleciona todos os botões que possuem o atributo data-checkout-btn
 const checkoutButtons = document.querySelectorAll("[data-checkout-btn]");
 
-// Insira o link real do Kiwify do cliente aqui
+// Link de pagamento do cliente
 const linkKiwify = "https://pay.kiwify.com.br/PLACEHOLDER";
 
-// Adiciona o evento de clique em todos os botões da página
-checkoutButtons.forEach((button) => {
-  button.addEventListener("click", function (event) {
-    event.preventDefault(); // Impede que o navegador siga o href="#"
+// Função para abrir o modal
+if (checkoutButtons.length > 0 && modalOverlay && iframeCheckout) {
+  checkoutButtons.forEach((button) => {
+    button.addEventListener("click", function (event) {
+      event.preventDefault(); // Impede a tela de pular para o topo
 
-    // Injeta o link no iframe apenas quando a pessoa clica para abrir
-    if (
-      iframeCheckout.src === "" ||
-      iframeCheckout.src.includes("about:blank")
-    ) {
-      iframeCheckout.src = linkKiwify;
-    }
+      // Injeta o link no iframe apenas no momento do clique para poupar carregamento inicial
+      if (
+        iframeCheckout.src === "" ||
+        iframeCheckout.src.includes("about:blank")
+      ) {
+        iframeCheckout.src = linkKiwify;
+      }
 
-    // Adiciona a classe que torna o modal visível
-    modalOverlay.classList.add("active");
+      modalOverlay.classList.add("active");
+    });
   });
-});
+}
 
-// Fechar o Modal clicando no X
-closeBtn.addEventListener("click", function () {
-  modalOverlay.classList.remove("active");
-});
-
-// Fechar o Modal clicando no fundo escuro fora do quadrado branco
-modalOverlay.addEventListener("click", function (event) {
-  if (event.target === modalOverlay) {
+// Fechar o modal ao clicar no botão 'X'
+if (closeBtn && modalOverlay) {
+  closeBtn.addEventListener("click", function () {
     modalOverlay.classList.remove("active");
-  }
-});
+  });
+}
+
+// Fechar o modal ao clicar no fundo escuro fora do conteúdo
+if (modalOverlay) {
+  modalOverlay.addEventListener("click", function (event) {
+    if (event.target === modalOverlay) {
+      modalOverlay.classList.remove("active");
+    }
+  });
+}
+
+// ==========================================
+// 2. EFEITO PARALLAX DO FUNDO
+// ==========================================
+const bgParallax = document.querySelector(".bg-parallax");
+
+if (bgParallax) {
+  window.addEventListener("scroll", () => {
+    // Captura o quanto a tela foi rolada para baixo
+    const scrollPosition = window.scrollY;
+
+    // Move a imagem de fundo para cima a 40% da velocidade da rolagem (-0.4)
+    // O que faz com que a ilusão de profundidade seja criada
+    bgParallax.style.transform = `translateY(${-(scrollPosition * 0.15)}px)`;
+  });
+}
