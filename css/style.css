@@ -16,7 +16,7 @@
   --fonte-secundaria: "Trebuchet MS", Tahoma, sans-serif;
 }
 
-/* RESET GERAL */
+/* 2. RESET GERAL */
 * {
   margin: 0;
   padding: 0;
@@ -26,7 +26,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* ESTRUTURA BASE E FUNDO */
+/* 3. ESTRUTURA BASE E FUNDO */
 body {
   background-color: transparent;
   background-image: repeating-linear-gradient(
@@ -41,27 +41,30 @@ body {
   font-family: var(--fonte-secundaria);
   line-height: 1.6;
 }
+
 .bg-parallax {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 500vh; /* 20% maior que a tela para ter espaço de sobra ao subir */
+  height: 500vh;
   background-image:
     linear-gradient(rgba(244, 235, 208, 0.5), rgba(244, 235, 208, 0.5)),
     url("../assets/img/fundoIdoso.png");
   background-size: cover;
-  background-position: center; /* Alinha a imagem embaixo por padrão */
-  z-index: -1; /* Joga pro fundo de tudo */
+  background-position: center;
+  z-index: -1;
 }
+
 .retro-image-wrapper {
   position: relative;
   display: inline-block;
   border: var(--borda-grossa);
   border-radius: 12px;
   box-shadow: 6px 6px 0px var(--cor-amarelo-retro);
-  overflow: hidden; /* Corta o que sobrar para as scanlines não vazarem da foto */
+  overflow: hidden;
 }
+
 .retro-image-wrapper img {
   display: block;
   width: 100%;
@@ -69,7 +72,7 @@ body {
   border: none;
   box-shadow: none;
 }
-/* O Segredo: a pseudo-camada por cima da foto desenhando linhas verticais (90deg) */
+
 .retro-image-wrapper::after {
   content: "";
   position: absolute;
@@ -84,21 +87,21 @@ body {
     rgba(0, 0, 0, 0.15) 2px,
     rgba(0, 0, 0, 0.15) 4px
   );
-  pointer-events: none; /* Deixa o usuário interagir/salvar a foto se quiser, sem que as linhas atrapalhem o clique */
+  pointer-events: none;
 }
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* Títulos Menores e Encaixados */
 .section-title,
 .section-hero__title,
 .final-cta-title {
   text-align: center;
   font-family: var(--fonte-principal);
-  font-size: 2.2rem; /* Reduzido de 3rem */
+  font-size: 2.2rem;
   margin-bottom: 20px;
   color: var(--cor-texto-escuro);
   text-transform: uppercase;
@@ -107,69 +110,54 @@ body {
     4px 4px 0px var(--cor-rosa-retro);
 }
 
-/* 4. BARRA DE TOPO (LETREIRO ANIMADO ESTILO PAINEL LED RETRÔ) */
+/* 4. BARRA DE TOPO (LETREIRO ANIMADO) */
 .top-bar-benefits {
-  background-color: #111111; /* Fundo super escuro para destacar o brilho */
+  background-color: #111111;
   padding: 15px 0;
   border-bottom: var(--borda-grossa);
-
-  /* Sombra interna profunda para dar profundidade ao painel */
   box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.9);
-
   overflow: hidden;
   white-space: nowrap;
 }
 
 .marquee-content {
   display: flex;
-  width: max-content; /* Permite que o conteúdo cresça além da tela */
-
-  /* Velocidade da animação (8s é bom, nem muito rápido, nem lento) */
+  width: max-content;
   animation: rolar-letreiro 8s linear infinite;
 }
 
 .benefit-item {
   display: inline-flex;
   align-items: center;
-  gap: 15px; /* Espaço entre ícone e texto */
-  padding: 0 40px; /* Espaço entre um benefício e outro */
-
-  /* --- O TOQUE RETRÔ --- */
-  font-family:
-    "Press Start 2P", cursive, "Courier New", Courier, monospace; /* Tenta usar Press Start 2P, senão uma pixelada monospace */
-  font-size: 0.9rem; /* Fontes pixeladas ficam melhores menores */
+  gap: 15px;
+  padding: 0 40px;
+  font-family: "Press Start 2P", cursive, "Courier New", Courier, monospace;
+  font-size: 0.9rem;
   text-transform: uppercase;
-  color: var(--cor-amarelo-retro); /* Cor principal do texto */
-
-  /* Múltiplas camadas de sombra para simular brilho e profundidade (efeito dot-matrix) */
+  color: var(--cor-amarelo-retro);
   text-shadow:
     0px 0px 4px rgba(255, 204, 0, 0.8),
-    /* Brilho amarelo próximo */ 0px 0px 8px rgba(255, 0, 127, 0.6),
-    /* Halo rosa/vermelho ao redor */ 2px 2px 2px rgba(0, 0, 0, 0.8); /* Sombra preta para dar volume */
+    0px 0px 8px rgba(255, 0, 127, 0.6),
+    2px 2px 2px rgba(0, 0, 0, 0.8);
 }
 
-/* Ajusta a cor e o brilho dos ícones para combinar com o letreiro */
 .benefit-item .icone-mask {
   background-color: var(--cor-amarelo-retro);
-  width: 20px; /* Tamanho proporcional ao novo tamanho da fonte */
+  width: 20px;
   height: 20px;
-
-  /* Sombra amarela no ícone também */
   box-shadow: 0px 0px 8px rgba(255, 204, 0, 0.6);
 }
 
-/* A matemática do loop perfeito e contínuo */
 @keyframes rolar-letreiro {
   0% {
     transform: translateX(0);
   }
   100% {
-    /* Como duplicamos o conteúdo no HTML, rolar -50% cria o loop invisível */
     transform: translateX(-50%);
   }
 }
 
-/* ESTRUTURA GERAL DAS MÁSCARAS DE ÍCONE */
+/* ESTRUTURA DAS MÁSCARAS DE ÍCONE */
 .icone-mask {
   width: 18px;
   height: 18px;
@@ -181,7 +169,7 @@ body {
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
 }
-/* Cores dos Ícones conforme o local */
+
 .top-bar-benefits .icone-mask {
   background-color: var(--cor-amarelo-retro);
 }
@@ -189,7 +177,6 @@ body {
   background-color: var(--cor-texto-escuro);
 }
 
-/* Vínculo das imagens .svg */
 .icone-baby {
   mask-image: url("../assets/icons/baby.svg");
   -webkit-mask-image: url("../assets/icons/baby.svg");
@@ -203,12 +190,11 @@ body {
   -webkit-mask-image: url("../assets/icons/shield.svg");
 }
 
-/* 5. CARTÕES E CAIXAS (Todos na cor Bege) */
+/* 5. CARTÕES E CAIXAS */
 .section-hero {
-  padding: 40px 0; /* Reduzido de 60px */
+  padding: 40px 0;
 }
 
-/* APLICANDO O BEGE NOS CARTÕES */
 .hero-card,
 .final-card,
 .module-card,
@@ -223,12 +209,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px; /* Reduzido de 50px */
+  gap: 30px;
   border: var(--borda-grossa);
   border-radius: 16px;
-  padding: 35px; /* Reduzido de 50px */
+  padding: 35px;
   box-shadow: var(--sombra-solida-azul);
 }
+
 .final-card {
   box-shadow: var(--sombra-solida-rosa);
 }
@@ -237,6 +224,7 @@ body {
 .final-cta-content {
   flex: 1.2;
 }
+
 .section-hero__image {
   flex: 1;
   display: flex;
@@ -251,20 +239,21 @@ body {
 }
 
 .section-hero__description {
-  font-size: 1.1rem; /* Reduzido de 1.2rem */
+  font-size: 1.1rem;
   margin-bottom: 25px;
   font-weight: bold;
 }
 
-/* 6. CAIXAS DE PREÇO MENORES */
+/* 6. CAIXAS DE PREÇO */
 .final-cta-box,
 .hero-price-box {
-  padding: 25px; /* Reduzido */
+  padding: 25px;
   border-radius: 12px;
   text-align: center;
   border: var(--borda-grossa);
   box-shadow: 5px 5px 0px var(--cor-ciano-retro);
 }
+
 .final-cta-box {
   flex: 0.8;
 }
@@ -277,17 +266,20 @@ body {
   text-decoration: line-through;
   font-weight: bold;
 }
+
 .price-box h3 {
   font-family: var(--fonte-principal);
-  font-size: 3.2rem; /* Reduzido de 4.5rem */
+  font-size: 3.2rem;
   color: var(--cor-rosa-retro);
   line-height: 1;
   margin: 10px 0;
   text-shadow: 3px 3px 0px var(--cor-texto-escuro);
 }
+
 .price-box .cents {
-  font-size: 1.5rem; /* Reduzido de 2rem */
+  font-size: 1.5rem;
 }
+
 .avista-text,
 .cta-info {
   font-weight: bold;
@@ -300,20 +292,22 @@ body {
   display: block;
   background-color: var(--cor-azul-retro);
   color: #fff;
-  padding: 12px 25px; /* Reduzido */
+  padding: 12px 25px;
   text-decoration: none;
   border-radius: 50px;
   font-family: var(--fonte-principal);
-  font-size: 1.2rem; /* Reduzido */
+  font-size: 1.2rem;
   border: var(--borda-grossa);
   box-shadow: 4px 4px 0px var(--cor-texto-escuro);
   transition: all 0.1s ease;
 }
+
 .checkout-button:hover {
   background-color: var(--cor-rosa-retro);
   transform: translate(4px, 4px);
   box-shadow: 0px 0px 0px var(--cor-texto-escuro);
 }
+
 .tempo-limitado {
   margin-top: 15px;
   font-weight: bold;
@@ -324,6 +318,7 @@ body {
   justify-content: center;
   gap: 8px;
 }
+
 .red-dot {
   width: 10px;
   height: 10px;
@@ -347,11 +342,13 @@ body {
 .section-modules {
   padding: 60px 0;
 }
+
 .modules-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 25px;
 }
+
 .module-card {
   padding: 25px;
   border-radius: 12px;
@@ -359,9 +356,11 @@ body {
   box-shadow: var(--sombra-solida-rosa);
   transition: transform 0.2s;
 }
+
 .module-card:hover {
   transform: translateY(-5px);
 }
+
 .module-card h3 {
   font-family: var(--fonte-principal);
   color: var(--cor-azul-retro);
@@ -375,6 +374,7 @@ body {
   flex-direction: column;
   gap: 15px;
 }
+
 .benefits-vertical li {
   font-weight: bold;
   display: flex;
@@ -382,6 +382,7 @@ body {
   gap: 12px;
   font-size: 1.05rem;
 }
+
 .icon-wrapper {
   background-color: var(--cor-amarelo-retro);
   border: 2px solid var(--cor-texto-escuro);
@@ -398,21 +399,25 @@ body {
 .section-author {
   padding: 60px 0;
 }
+
 .author-container {
   display: flex;
   align-items: center;
   gap: 50px;
 }
+
 .author-image,
 .author-content {
   flex: 1;
 }
+
 .author-image img {
   max-width: 100%;
   border-radius: 16px;
   border: var(--borda-grossa);
   box-shadow: var(--sombra-solida-azul);
 }
+
 .author-content .section-title {
   text-align: left;
   text-shadow: 3px 3px 0px var(--cor-amarelo-retro);
@@ -422,10 +427,12 @@ body {
 .section-faq {
   padding: 60px 0;
 }
+
 .faq-container {
   max-width: 800px;
   margin: 0 auto;
 }
+
 .faq-subtitle {
   text-align: center;
   color: var(--cor-azul-retro);
@@ -433,16 +440,19 @@ body {
   margin-bottom: 10px;
   font-size: 1.1rem;
 }
+
 .faq-list {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
+
 .faq-item {
   border-radius: 12px;
   border: var(--borda-grossa);
   box-shadow: 4px 4px 0px var(--cor-azul-retro);
 }
+
 .faq-question {
   padding: 18px;
   font-weight: bold;
@@ -451,15 +461,18 @@ body {
   list-style: none;
   position: relative;
 }
+
 .faq-question::-webkit-details-marker {
   display: none;
 }
+
 .faq-question::after {
   content: "▼";
   position: absolute;
   right: 20px;
   color: var(--cor-rosa-retro);
 }
+
 .faq-answer {
   padding: 0 18px 18px 18px;
   border-top: 2px dashed var(--cor-texto-escuro);
@@ -467,54 +480,7 @@ body {
   padding-top: 15px;
 }
 
-/* 11. MODAL DE CHECKOUT */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(43, 27, 23, 0.8);
-  z-index: 9999;
-  justify-content: center;
-  align-items: center;
-}
-.modal-overlay.active {
-  display: flex;
-}
-.modal-content {
-  background-color: var(--cor-fundo-bege);
-  width: 90%;
-  max-width: 600px;
-  height: 80vh;
-  border-radius: 16px;
-  position: relative;
-  border: var(--borda-grossa);
-  box-shadow: 10px 10px 0px var(--cor-rosa-retro);
-}
-.modal-close-btn {
-  position: absolute;
-  top: -20px;
-  right: -20px;
-  width: 45px;
-  height: 45px;
-  font-size: 2rem;
-  color: #fff;
-  background: var(--cor-texto-escuro);
-  border: var(--borda-grossa);
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.modal-close-btn:hover {
-  background: var(--cor-rosa-retro);
-}
-
-/* 12. RESPONSIVIDADE */
+/* 11. RESPONSIVIDADE */
 @media (max-width: 992px) {
   .hero-card,
   .final-card,
@@ -522,31 +488,6 @@ body {
     flex-direction: column;
     padding: 25px;
     box-shadow: 4px 4px 0px var(--cor-azul-retro);
-  }
-  @media (max-width: 768px) {
-    .section-title,
-    .section-hero__title,
-    .final-cta-title {
-      font-size: 1.5rem; /* Reduz os títulos principais */
-    }
-
-    .price-box h3 {
-      font-size: 2.8rem; /* Reduz a fonte gigante do preço */
-    }
-
-    .price-box .cents {
-      font-size: 1.2rem;
-    }
-
-    .hero-card,
-    .final-card {
-      padding: 20px; /* Reduz as bordas internas dos cartões para ganhar espaço */
-    }
-
-    .checkout-button {
-      font-size: 1rem;
-      padding: 12px 20px;
-    }
   }
   .section-title,
   .section-hero__title {
@@ -558,5 +499,27 @@ body {
   }
   .author-content .section-title {
     text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-title,
+  .section-hero__title,
+  .final-cta-title {
+    font-size: 1.5rem;
+  }
+  .price-box h3 {
+    font-size: 2.8rem;
+  }
+  .price-box .cents {
+    font-size: 1.2rem;
+  }
+  .hero-card,
+  .final-card {
+    padding: 20px;
+  }
+  .checkout-button {
+    font-size: 1rem;
+    padding: 12px 20px;
   }
 }
